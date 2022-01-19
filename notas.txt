@@ -1,0 +1,20 @@
+funciones:
+detectar 1 celda seleccionada
+mostrar su imagen
+guardar primera celda seleccionada
+detectar 2 celda seleccionada
+mostrar su imagen
+guardar segunda celda seleccionada
+comparar ambas celdas
+
+si coinciden
+	sumar punto
+	mantener imagen visible + borde
+	reiniciar variable cartasSeleccionadas
+si no coinciden
+	ocultar ambas imagenes
+
+si marcador == 6
+	alert
+	resetear todo
+	
