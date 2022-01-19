@@ -10,7 +10,7 @@ comparar ambas celdas
 si coinciden
 	sumar punto
 	mantener imagen visible + borde
-	reiniciar variable cartasSeleccionadas
+	reiniciar variables globales necesarias para las siguientes parejas
 si no coinciden
 	ocultar ambas imagenes
 
