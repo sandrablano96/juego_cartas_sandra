@@ -1,5 +1,6 @@
 var contadorClicks = 0;
 var cont = 0;
+var cartasSeleccionadas = new Array();
 let imagenesCarta = document.querySelectorAll(".carta__imagen");
 let cartas = document.querySelectorAll(".carta");
 
@@ -13,7 +14,7 @@ for (carta of cartas) {
         let contenidoCarta = evt.target;
         let idCarta = contenidoCarta.parentElement.id;
         contadorClicks++;
-        let cartasSeleccionadas = new Array();
+        
         for (let i = 0; i <= 12; i++) {
             if (idCarta == i) {
                 this.lastElementChild.style.display = "block";
