@@ -14,9 +14,6 @@ p {
     font-size: 1.6rem;
 }
 
-img{
-    width: 100%;
-}
 
 .marcador{
     grid-column: 1/5;
@@ -26,11 +23,21 @@ img{
 .contenedor-grid{
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    grid-template-rows: repeat(3, 20rem);
+    grid-template-rows: repeat(3, 200px);
     background-color: lightgrey;
     gap:10px;
+    width: 70%;
+    margin: auto;
 }
 
 .carta {
     text-align: center;
+    background-image: url(img/cara-trasera.jpg);
+    background-size: cover;
 }
+
+.carta__imagen {
+    display: none;
+    width: 90%;
+}
+
