@@ -1,5 +1,6 @@
 var contadorClicks = 0;
-var cont = 0;
+var cont = document.getElementById("contador");
+var errores = document.getElementById("errores");
 var cartasSeleccionadas = new Array();
 let cartas = document.querySelectorAll(".carta");
 var imagen
@@ -9,6 +10,12 @@ let opciones2 = [1, 2, 3, 4, 5, 6];
 shuffle(opciones1);
 shuffle(opciones2);
 let arrayOpciones = opciones1.concat(opciones2);
+let usuario;
+do{
+    usuario = prompt("Introduce tu nombre de usuario")
+}while(usuario == "")
+let etiquetaUsuario = document.getElementById("usuario").innerHTML = usuario
+
 
 for (let i = 0; i < cartas.length; i++) {
     cartas[i].setAttribute("name", arrayOpciones[i]);
@@ -36,7 +43,6 @@ function shuffle(array) {
 function mostrarImagenes(evt) {
     contadorClicks++;
     let carta = evt.target;
-    console.log(carta);
     if (carta != null) {
         /*let carta = contenidoCarta.parentElement;*/
         let idCarta = carta.getAttribute("name");
@@ -48,13 +54,15 @@ function mostrarImagenes(evt) {
         carta.style.backgroundImage = "url('')";
         carta.style.border = "1px solid black";
         this.firstElementChild.style.display = "none";
+        this.removeEventListener("click", mostrarImagenes, {passive: false});
         if (contadorClicks == 2) {
             contadorClicks = 0;
             setTimeout(() => {
                 deseleccionar();
-              }, 1000);
+              }, 300);
             
         }
+        
     }
 
 }
@@ -65,25 +73,18 @@ for (carta of cartas) {
 
 
 function deseleccionar() {
-    if (comprobarIguales(cartasSeleccionadas)) {
+    if (!comprobarIguales(cartasSeleccionadas)) {
         cartasSeleccionadas.forEach(element => {
-            element.removeEventListener("click", mostrarImagenes);
+            element.removeChild(element.lastElementChild);
+            element.addEventListener("click", mostrarImagenes);
+            //prodiamos crear una clase con dos estilos (inicial, acertada) y quitar o darla a los elementos
+            element.style.backgroundImage = "url(img/cara-trasera.jpg)";
+            element.style.backgroundColor = "";
+            element.style.border= "";
+
         });
-
-    } else{
-            cartasSeleccionadas.forEach(element => {
-                element.removeChild(element.lastElementChild);
-                element.addEventListener("click", mostrarImagenes);
-                //prodiamos crear una clase con dos estilos (inicial, acertada) y quitar o darla a los elementos
-                element.style.backgroundImage = "url(img/cara-trasera.jpg)";
-                element.style.backgroundColor = "";
-                element.style.border= "";
-
-            });
-
     };
     cartasSeleccionadas = [];
-
 }
 
 
@@ -92,14 +93,51 @@ function comprobarIguales(arraySeleccionados) {
         arraySeleccionados.forEach(element => {
             element.style.border = "3px solid green"
         });
-        console.log("verdadero");
-        cont++;
+        
+        checkTotal()
+        
         return true;
-        /*function checkTotal(){
-
-        }*/
     } else {
-        console.log("falso");
+        sumarErrores();
         return false
     }
+}
+
+function checkTotal(){
+    contParsed = parseInt(cont.textContent, 10)
+    contParsed++
+    cont.innerHTML = contParsed;
+    if(contParsed == 6){
+        alert(`Ganaste!! con ${errores.textContent} errores`)
+        window.location.reload();
+    }
+}
+
+function sumarErrores(){
+    errorParsed = parseInt(errores.textContent, 10)
+    errorParsed++
+    errores.innerHTML = errorParsed;
+}
+
+/* COOKIES */
+function setCookie(nombreCookie, valorCookie, expiraDia = 30){
+    const date = new Date();
+    date.setTime(date.getTime() + (expiraDia * 24 * 60 * 60 * 1000))
+    let expiracion = `expira=${date.toUTCString()}`;
+    document.cookie = `${nombreCookie}=${valorCookie}; ${expiracion};`;
+}
+
+function getCookie(nombreCookie){
+    let nombre = nombreCookie + "=";
+    let arrayCookie = document.cookie.split(";");
+    for (let i = 0; i < arrayCookie.length; i++) {
+        let cookie = arrayCookie[i];
+        while(cookie.charAt(0) == ' '){
+            cookie = cookie.substring(1);
+        }
+        if(cookie.indexOf(nombre) == 0){
+            return cookie.substring(nombre.length, cookie.length);
+        }
+    }
+    return "";
 }
