@@ -11,10 +11,10 @@ shuffle(opciones1);
 shuffle(opciones2);
 let arrayOpciones = opciones1.concat(opciones2);
 let usuario;
-do{
+/*do{
     usuario = prompt("Introduce tu nombre de usuario", )
 }while(usuario === "" || usuario == null)
-let etiquetaUsuario = document.getElementById("usuario").innerHTML = usuario
+let etiquetaUsuario = document.getElementById("usuario").innerHTML = usuario*/
 let filaError = document.getElementById("filaError").textContent
 
 
