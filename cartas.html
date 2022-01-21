@@ -6,21 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego de cartas</title>
-    <!-- <link rel="stylesheet" href="sandra.css"> -->
-    <!-- <link rel="stylesheet" href="samuel.css"> -->
     <link rel="stylesheet" type="text/css" href="estilos.css">
+    <link rel="stylesheet" type="text/css" href="sandra.css">
+    <link rel="stylesheet" type="text/css" href="samuel.css">
 </head>
 
-<body> 
-    <h1>JUEGO DE PAREJAS</h1>
-    <p>Usuario: <span id="usuario"></span></p>
-    <div class="marcador">
-        <p>Puntuación: <span id="contador">0</span></p>
-        <p>Errores: <span id="errores">0</span></p>
+<body>
+    <div class="header">
+        <div class="header__logo">
+            <img src="https://www.themoviedb.org/t/p/original/hKuiXx5eNObCLKe9BOl7O7ulKyg.png" alt="logo">
+        </div>
+        <div class="header__titulo">
+            <h1>Juego de parejas de los Simpson</h1>
+        </div>
     </div>
+    <section class="estadisticas">
+        <div class="usuario">
+            <p>Usuario: <span id="usuario"></span></p>
+            <div class="marcador">
+                <p>Puntuación: <span id="contador">0</span></p>
+                <p>Errores: <span id="errores">0</span></p>
+            </div>
+        </div>
+    </section>
+    
+    
+    
     <div class="contenedor-grid">
         <div class="carta">
-            <div  class="carta__imagen">
+            <div class="carta__imagen">
             </div>
         </div>
         <div class="carta">
@@ -68,16 +82,7 @@
             </div>
         </div>
     </div>
-    <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Errores</th>
-        </tr>
-        <tr id="informacionJugador">
-            <td id="filaJugador"></td>
-            <td id="filaError"></td>
-        </tr>
-    </table>
     <script src="js/script.js"></script>
 </body>
+
 </html>
