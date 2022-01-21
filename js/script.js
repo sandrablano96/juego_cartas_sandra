@@ -12,9 +12,11 @@ shuffle(opciones2);
 let arrayOpciones = opciones1.concat(opciones2);
 let usuario;
 do{
-    usuario = prompt("Introduce tu nombre de usuario")
-}while(usuario == "")
+    usuario = prompt("Introduce tu nombre de usuario", )
+}while(usuario === "" || usuario == null)
 let etiquetaUsuario = document.getElementById("usuario").innerHTML = usuario
+let filaError = document.getElementById("filaError").textContent
+
 
 
 for (let i = 0; i < cartas.length; i++) {
@@ -108,6 +110,7 @@ function checkTotal(){
     contParsed++
     cont.innerHTML = contParsed;
     if(contParsed == 6){
+        guardarPuntuacionFinal(this.usuario,errores.textContent);
         alert(`Ganaste!! con ${errores.textContent} errores`)
         window.location.reload();
     }
@@ -140,4 +143,17 @@ function getCookie(nombreCookie){
         }
     }
     return "";
+}
+
+function guardarPuntuacionFinal(usuario, errores){
+    let aux = getCookie("aux");
+    setCookie("usuario",usuario.textContent);
+
+    if(aux == ""){
+        aux = setCookie("aux", 100)
+    }else{
+        aux = getCookie("aux")
+    }
+
+    setCookie("aux",Math.min(aux,errores));
 }
