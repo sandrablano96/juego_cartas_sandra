@@ -1,20 +1,30 @@
+
 var contadorClicks = 0;
 var cont = document.getElementById("contador");
 var errores = document.getElementById("errores");
 var cartasSeleccionadas = new Array();
 let cartas = document.querySelectorAll(".carta");
 var imagen;
+let win, matchmsg, errormsg;
 
-//creamos el array de cartas
 let opciones = ["bart", "lisa", "bart", "maggie", "maggie", "homer", "flanders", "lisa", "flanders", "marge", "marge", "homer"];
-let arrayOpciones = opciones.sort(function () { return Math.random() - 0.5 });
+//crear funcion init que al cargar el doc carge el xml y el idioma segun la cookie
+//creamos el array de cartas
 
-//ponemos el idioma, si ya hay almacenado uno, sino por defecto español
-if (localStorage.getItem("idioma") != null) {
-    cambiaTexto(localStorage.getItem("idioma"));
-} else {
-    cambiaTexto("esp");
+function init() {
+
+    if (localStorage.getItem("idioma") != null) {
+        cargarIdiomas(localStorage.getItem("idioma"));
+        cambiaDescripcion(localStorage.getItem("idioma"));
+    } else {
+        cargarIdiomas("esp");
+        cambiaDescripcio("esp");
+    }
 }
+
+init();
+
+var arrayOpciones = opciones.sort(function () { return Math.random() - 0.5 });
 
 for (let i = 0; i < arrayOpciones.length; i++) {
     cartas[i].setAttribute("name", arrayOpciones[i]);
@@ -45,11 +55,9 @@ function mostrarImagenes(evt) {
     let carta = evt.target;
     console.log(carta);
     if (carta != null) {
-        /*let carta = contenidoCarta.parentElement;*/
         let idCarta = carta.getAttribute("name");
         cartasSeleccionadas.push(carta);
         imagen = document.createElement("img");
-        //corregir, se agrega debajo del div de carta__imagen 
         carta.firstElementChild.appendChild(imagen).setAttribute("src", "img/" + idCarta + ".png");
         imagen.setAttribute("alt", idCarta);
         carta.style.backgroundColor = "white";
@@ -95,16 +103,15 @@ let barraInformativa = document.getElementById("barra_informativa");
 function comprobarIguales(arraySeleccionados) {
     if (arraySeleccionados[0].getAttribute("name") == arraySeleccionados[1].getAttribute("name")) {
         arraySeleccionados.forEach(element => {
-            element.style.border = "3px solid green"
-            barraInformativa.innerHTML = "¡Has acertado!";
-
+            element.style.boxShadow = "9px 7px 2px -6px #1AAE00";
+            barraInformativa.innerHTML = matchmsg;
         });
 
         checkTotal()
 
         return true;
     } else {
-        barraInformativa.innerHTML = "¡Has fallado!";
+        barraInformativa.innerHTML = errormsg;
         sumarErrores();
         return false
     }
@@ -116,7 +123,7 @@ function checkTotal() {
     cont.innerHTML = contParsed;
     if (contParsed == 6) {
         guardarPuntuacionFinal(this.usuario, errores.textContent);
-        alert(`Ganaste!! con ${errores.textContent} errores`)
+        alert(win)
         window.location.reload();
     }
 }
@@ -168,6 +175,7 @@ function getCookie(nombreCookie) {
 let btnsIdiomas = document.getElementsByClassName("idioma");
 Array.from(btnsIdiomas).forEach(element => {
     element.addEventListener("click", cambiaIdioma);
+    element.addEventListener("click", cambiaDescripcion);
 });
 
 function cambiaIdioma(evt) {
@@ -177,36 +185,84 @@ function cambiaIdioma(evt) {
     } else {
         if (idiomaClick == "eng") {
             localStorage.setItem("idioma", "eng");
-            cambiaTexto("eng");
+            cargarIdiomas("eng");
+            cambiaDescripcion("eng");
             evt.target.style.fontWeight = "bold";
             document.getElementById("esp").style.fontWeight = "normal";
         } else {
             localStorage.setItem("idioma", "esp");
-            cambiaTexto("esp");
+            cargarIdiomas("esp");
+            cambiaDescripcion("esp");
             evt.target.style.fontWeight = "bold";
             document.getElementById("eng").style.fontWeight = "normal";
         }
     }
 }
-function cambiaTexto(idioma) {
-    if (idioma == "eng") {
-        document.getElementById("estadisticas").innerHTML = "Stadistics";
-        document.getElementById("tagPuntuacion").innerHTML = "Score";
-        document.getElementById("tagErrores").innerHTML = "Errors";
-        document.getElementById("tagErroresTop").innerHTML = "Errors";
-        document.getElementById("leng").innerHTML = "Language";
 
-        document.getElementById("tagDesc").innerHTML = "Description";
+function cambiaDescripcion(leng) {
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("tagDescCompleta").innerHTML = this.responseText;
+        }
+    };
+    if (leng == "eng") {
+        xhr.open("GET", "../descripcion_en.txt", true);
+        // .send: envía la solicitud al servidor.
+        //    Si utilizamos POST debemos pasar los datos por parámetro 
     } else {
-        document.getElementById("estadisticas").innerHTML = "Estadisticas";
-        document.getElementById("tagPuntuacion").innerHTML = "Puntuacion";
-        document.getElementById("tagErrores").innerHTML = "Errores";
-        document.getElementById("tagErroresTop").innerHTML = "Errores";
-        document.getElementById("leng").innerHTML = "Lenguaje";
-
-        document.getElementById("tagDesc").innerHTML = "Descripcion";
+        xhr.open("GET", "../descripcion_es.txt", true);
     }
 
+    xhr.send();
+
 }
+
+
+function cargarIdiomas(idioma) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            cargarXML(this, idioma);
+        }
+    };
+    xhr.open("GET", "../idioma.xml", true);
+    xhr.send();
+}
+
+function cargarXML(xml, leng) {
+    var docXML = xml.responseXML;
+    let childN, esta, score, errors, topplayer, desc;
+    if (leng == "eng") {
+        childN = 0;
+    }
+    else {
+        childN = 1;
+    }
+    document.getElementById("estadisticas").innerHTML = docXML.getElementsByTagName("STADISTICS")[childN].textContent;
+
+    document.getElementById("barra_informativa").innerHTML = docXML.getElementsByTagName("INFOBAR")[childN].textContent;
+
+    document.getElementById("tagPuntuacion").innerHTML = docXML.getElementsByTagName("SCORE")[childN].textContent;
+
+    document.getElementById("tagErrores").innerHTML = docXML.getElementsByTagName("ERRORS")[childN].textContent;
+
+    document.getElementById("tagErroresTop").innerHTML = docXML.getElementsByTagName("ERRORS")[childN].textContent;
+
+    document.getElementById("tagTop").innerHTML = docXML.getElementsByTagName("TOPPLAYER")[childN].textContent;
+
+    matchmsg = docXML.getElementsByTagName("MATCHMESSAGE")[childN].textContent;
+
+    errormsg = docXML.getElementsByTagName("ERRORMESSAGE")[childN].textContent;
+
+    document.getElementById("tagDesc").innerHTML = docXML.getElementsByTagName("DESC")[childN].textContent;
+
+    win = docXML.getElementsByTagName("WIN")[childN].textContent;
+    document.getElementById("leng").innerHTML = leng;
+
+
+}
+
 
 
