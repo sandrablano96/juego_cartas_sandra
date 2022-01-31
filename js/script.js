@@ -1,4 +1,3 @@
-
 var contadorClicks = 0;
 var cont = document.getElementById("contador");
 var errores = document.getElementById("errores");
@@ -10,8 +9,9 @@ let win, matchmsg, errormsg;
 let opciones = ["bart", "lisa", "bart", "maggie", "maggie", "homer", "flanders", "lisa", "flanders", "marge", "marge", "homer"];
 //crear funcion init que al cargar el doc carge el xml y el idioma segun la cookie
 //creamos el array de cartas
+var arrayOpciones = opciones.sort(function () { return Math.random() - 0.5 });
 
-function init() {
+window.onload = function init() {
 
     if (localStorage.getItem("idioma") != null) {
         cargarIdiomas(localStorage.getItem("idioma"));
@@ -21,10 +21,6 @@ function init() {
         cambiaDescripcio("esp");
     }
 }
-
-init();
-
-var arrayOpciones = opciones.sort(function () { return Math.random() - 0.5 });
 
 for (let i = 0; i < arrayOpciones.length; i++) {
     cartas[i].setAttribute("name", arrayOpciones[i]);
@@ -60,9 +56,7 @@ function mostrarImagenes(evt) {
         imagen = document.createElement("img");
         carta.firstElementChild.appendChild(imagen).setAttribute("src", "img/" + idCarta + ".png");
         imagen.setAttribute("alt", idCarta);
-        carta.style.backgroundColor = "white";
-        carta.style.backgroundImage = "url('')";
-        carta.style.border = "1px solid black";
+        carta.classList.add("cara-delantera");
         carta.removeEventListener("click", mostrarImagenes);
         if (contadorClicks == 2) {
             contadorClicks = 0;
@@ -86,10 +80,8 @@ function deseleccionar(cartas) {
         cartas.forEach(element => {
             element.firstElementChild.removeChild(element.firstElementChild.lastElementChild);
             element.addEventListener("click", mostrarImagenes);
-            //prodiamos crear una clase con dos estilos (inicial, acertada) y quitar o darla a los elementos
-            element.style.backgroundImage = "url(img/cara-trasera.jpg)";
-            element.style.backgroundColor = "";
-            element.style.border = "";
+            element.classList.remove("cara-delantera");
+            
 
         });
 
@@ -103,7 +95,7 @@ let barraInformativa = document.getElementById("barra_informativa");
 function comprobarIguales(arraySeleccionados) {
     if (arraySeleccionados[0].getAttribute("name") == arraySeleccionados[1].getAttribute("name")) {
         arraySeleccionados.forEach(element => {
-            element.style.boxShadow = "9px 7px 2px -6px #1AAE00";
+            element.classList.add("correcta");
             barraInformativa.innerHTML = matchmsg;
         });
 
@@ -233,7 +225,7 @@ function cargarIdiomas(idioma) {
 
 function cargarXML(xml, leng) {
     var docXML = xml.responseXML;
-    let childN, esta, score, errors, topplayer, desc;
+    let childN;
     if (leng == "eng") {
         childN = 0;
     }

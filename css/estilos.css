@@ -34,7 +34,7 @@ p {
 
 .carta {
     text-align: center;
-    background-image: url(img/cara-trasera.jpg);
+    background-image: url("../img/cara-trasera.jpg");
     background-size: cover;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
