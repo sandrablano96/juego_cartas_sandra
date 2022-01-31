@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <LANGUAGE>
 <eng>
     <STADISTICS>STADISTICS</STADISTICS>
@@ -23,3 +24,23 @@
     <WIN>¡Has ganado!</WIN>
 </esp>
 </LANGUAGE>
+=======
+<LANGUAGE>
+<eng>
+    <SCORE>Score</SCORE>
+    <ERRORS>Errors</ERRORS>
+    <TOPPLAYER>Top player</TOPPLAYER>
+    <MATCHMESSAGE>It's a match!</MATCHMESSAGE>
+    <ERRORMESSAGE>Oops,choose better next time!</ERRORMESSAGE>
+    <WIN>You win!</WIN>
+</eng>
+<es>
+    <SCORE>Puntuación</SCORE>
+    <ERRORS>Errores</ERRORS>
+    <TOPPLAYER>Mejor jugador</TOPPLAYER>
+    <MATCHMESSAGE>¡Has acertado!</MATCHMESSAGE>
+    <ERRORMESSAGE>¡Ops, escoge mejor la próxima vez!</ERRORMESSAGE>
+    <WIN>¡Has ganado!</WIN>
+</es>
+</LANGUAGE>
+>>>>>>> 0f686d6cd983784af63e47c5346a57e3afb83e37
