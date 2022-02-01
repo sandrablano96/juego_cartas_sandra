@@ -14,11 +14,10 @@ var arrayOpciones = opciones.sort(function () { return Math.random() - 0.5 });
 window.onload = function init() {
 
     if (localStorage.getItem("idioma") != null) {
-        cargarIdiomas(localStorage.getItem("idioma"));
-        cambiaDescripcion(localStorage.getItem("idioma"));
+        cambiarIdiomaJSON(localStorage.getItem("idioma"));
+        
     } else {
-        cargarIdiomas("esp");
-        cambiaDescripcio("esp");
+        cambiarIdiomaJSON("esp");
     }
 }
 
@@ -167,7 +166,6 @@ function getCookie(nombreCookie) {
 let btnsIdiomas = document.getElementsByClassName("idioma");
 Array.from(btnsIdiomas).forEach(element => {
     element.addEventListener("click", cambiaIdioma);
-    element.addEventListener("click", cambiaDescripcion);
 });
 
 function cambiaIdioma(evt) {
@@ -177,20 +175,22 @@ function cambiaIdioma(evt) {
     } else {
         if (idiomaClick == "eng") {
             localStorage.setItem("idioma", "eng");
-            cargarIdiomas("eng");
-            cambiaDescripcion("eng");
+            cambiarIdiomaJSON("eng");
+            //cargarIdiomas("eng");
+            //cambiaDescripcion("eng");
             evt.target.style.fontWeight = "bold";
             document.getElementById("esp").style.fontWeight = "normal";
         } else {
             localStorage.setItem("idioma", "esp");
-            cargarIdiomas("esp");
-            cambiaDescripcion("esp");
+            cambiarIdiomaJSON("esp");
+            //cargarIdiomas("esp");
+            //cambiaDescripcion("esp");
             evt.target.style.fontWeight = "bold";
             document.getElementById("eng").style.fontWeight = "normal";
         }
     }
 }
-
+/*
 function cambiaDescripcion(leng) {
 
     var xhr = new XMLHttpRequest();
@@ -255,6 +255,51 @@ function cargarXML(xml, leng) {
 
 
 }
+*/
+function cambiarIdiomaJSON(idioma){
+    var xmlhttp = new XMLHttpRequest();
+    var url = "lang.json";
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var myArr = JSON.parse(this.responseText);
+            cambiaTexto(myArr, idioma);
+        }
+    };
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+    function cambiaTexto(arr, idioma) {
+            let lenguaje = arr["lang"][idioma];
+
+            document.getElementById("estadisticas").innerHTML = lenguaje.STADISTICS;
+
+            document.getElementById("barra_informativa").innerHTML = lenguaje.INFOBAR;
+
+            document.getElementById("tagPuntuacion").innerHTML = lenguaje.SCORE;
+
+            document.getElementById("tagErrores").innerHTML = lenguaje.ERRORS;
+
+            document.getElementById("tagErroresTop").innerHTML = lenguaje.ERRORS;
+
+            document.getElementById("tagTop").innerHTML = lenguaje.TOPPLAYER;
+
+            matchmsg = lenguaje.MATCHMESSAGE
+
+            errormsg = lenguaje.ERRORMESSAGE
+
+            document.getElementById("tagDesc").innerHTML = lenguaje.DESC;
+
+            win = lenguaje.WIN;
+
+            document.getElementById("tagDescCompleta").innerHTML = lenguaje.DESCRIPTION;
+
+            document.getElementById("leng").innerHTML = idioma;
+    }
+    
+}
+
 
 
 
