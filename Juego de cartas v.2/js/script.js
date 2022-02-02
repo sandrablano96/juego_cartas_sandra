@@ -1,9 +1,9 @@
 let contadorClicks = 0;
-const cont = document.getElementById("contador");
-const errores = document.getElementById("errores");
+const cont = $("#contador");
+const errores = $("#errores");
 let cartasSeleccionadas = new Array();
-const cartas = document.querySelectorAll(".carta");
-const imagen;
+const cartas = $(".carta");
+let imagen;
 let win, matchmsg, errormsg;
 
 const opciones = ["bart", "lisa", "bart", "maggie", "maggie", "homer", "flanders", "lisa", "flanders", "marge", "marge", "homer"];
@@ -29,37 +29,34 @@ let usuario;
 do {
     usuario = prompt("Introduce tu nombre de usuario",)
 } while (usuario === "" || usuario == null)
-    document.getElementById("usuario").innerHTML = usuario;
+    $("usuario").html(usuario);
 
 //Top player
-const filaError = document.getElementById("jugadorTopFilaError")
-const jugadorTop = document.getElementById("jugadorTop")
+const filaError = $("#jugadorTopFilaError");
+const jugadorTop = $("#jugadorTop");
 
 if (localStorage.getItem("errores") != null && localStorage.getItem("usuario") != null) {
-    filaError.innerHTML = localStorage.getItem("errores")
-    jugadorTop.innerHTML = localStorage.getItem("usuario")
+    $(filaError).html(localStorage.getItem("errores"))
+    $(jugadorTop).html(localStorage.getItem("usuario"))
 } else{
     aux = localStorage.setItem("errores", 100);
 }
 
-
 //añade a cada div carta el evento
-for (carta of cartas) {
-    carta.addEventListener("click", mostrarImagenes);
-}
+$(".carta").on("click",mostrarImagenes);
 
 function mostrarImagenes(evt) {
     contadorClicks++;
     const carta = evt.target;
-    console.log(carta);
     if (carta != null) {
-        const idCarta = carta.getAttribute("name");
+        const idCarta = $(carta).attr("name");
         cartasSeleccionadas.push(carta);
         imagen = document.createElement("img");
-        carta.firstElementChild.appendChild(imagen).setAttribute("src", "img/" + idCarta + ".png");
-        imagen.setAttribute("alt", idCarta);
-        carta.classList.add("cara-delantera");
-        carta.removeEventListener("click", mostrarImagenes);
+        $(imagen).attr("src", "img/" + idCarta + ".png")
+        $(carta).children(".carta__imagen").append(imagen);
+        $(imagen).attr("alt", idCarta);
+        $(carta).addClass("cara-delantera");
+        $(carta).off(evt);
         if (contadorClicks == 2) {
             contadorClicks = 0;
             setTimeout(() => {
@@ -74,43 +71,43 @@ function mostrarImagenes(evt) {
 function deseleccionar(cartas) {
     if (comprobarIguales(cartas)) {
         cartas.forEach(element => {
-            element.removeEventListener("click", mostrarImagenes);
+            $(element).off("click");
         });
 
     } else {
         cartas.forEach(element => {
-            element.firstElementChild.removeChild(element.firstElementChild.lastElementChild);
-            element.addEventListener("click", mostrarImagenes);
-            element.classList.remove("cara-delantera");
+            $(element).children().first().empty();
+            $(element).on("click",mostrarImagenes);
+            $(element).removeClass("cara-delantera");
         });
     };
 
     cartasSeleccionadas = [];
 }
 
-const barraInformativa = document.getElementById("barra_informativa");
+const barraInformativa = $("#barra_informativa");
 
 function comprobarIguales(arraySeleccionados) {
-    if (arraySeleccionados[0].getAttribute("name") == arraySeleccionados[1].getAttribute("name")) {
+    if ($(arraySeleccionados[0]).attr("name") == $(arraySeleccionados[1]).attr("name")) {
         arraySeleccionados.forEach(element => {
-            element.classList.add("correcta");
-            barraInformativa.innerHTML = matchmsg;
+            $(element).addClass("correcta");
+            $(barraInformativa).html(matchmsg);
         });
 
         checkTotal()
 
         return true;
     } else {
-        barraInformativa.innerHTML = errormsg;
         sumarErrores();
-        return false
+        $(barraInformativa).html(errormsg);
+        return false;
     }
 }
 
 function checkTotal() {
-    contParsed = parseInt(cont.textContent, 10)
+    contParsed = parseInt($(cont).text(), 10)
     contParsed++
-    cont.innerHTML = contParsed;
+    $(cont).html(contParsed);
     if (contParsed == 6) {
         guardarPuntuacionFinal(this.usuario, errores.textContent);
         alert(win)
@@ -119,9 +116,9 @@ function checkTotal() {
 }
 
 function sumarErrores() {
-    errorParsed = parseInt(errores.textContent, 10)
+    errorParsed = parseInt($(errores).text(), 10)
     errorParsed++
-    errores.innerHTML = errorParsed;
+    $(errores).html(errorParsed);
 }
 
 function guardarPuntuacionFinal(usuario, errores) {
@@ -135,26 +132,23 @@ function guardarPuntuacionFinal(usuario, errores) {
 }
 
 //Idioma
-const btnsIdiomas = document.getElementsByClassName("idioma");
-Array.from(btnsIdiomas).forEach(element => {
-    element.addEventListener("click", cambiaIdioma);
-});
+$(".idioma").on("click",cambiaIdioma);
 
-function cambiaIdioma(evt) {
-    let idiomaClick = evt.target.id;
+function cambiaIdioma() {
+    let idiomaClick = $(this).attr("id");
     if (localStorage.getItem("idioma") == idiomaClick) {
         return;
     } else {
         if (idiomaClick == "eng") {
             localStorage.setItem("idioma", "eng");
             cambiarIdiomaJSON("eng");
-            evt.target.style.fontWeight = "bold";
-            document.getElementById("esp").style.fontWeight = "normal";
+            $(this).css("fontWeight", "bold");
+            $("#esp").css("fontWeight", "normal" );
         } else {
             localStorage.setItem("idioma", "esp");
             cambiarIdiomaJSON("esp");
-            evt.target.style.fontWeight = "bold";
-            document.getElementById("eng").style.fontWeight = "normal";
+            $(this).css("fontWeight", "bold");
+            $("#eng").css("fontWeight", "normal" );
         }
     }
 }
@@ -176,29 +170,29 @@ function cambiarIdiomaJSON(idioma){
     function cambiaTexto(arr, idioma) {
             const lenguaje = arr["lang"][idioma];
 
-            document.getElementById("estadisticas").innerHTML = lenguaje.STADISTICS;
+            $("#estadisticas").html( lenguaje.STADISTICS);
 
-            document.getElementById("barra_informativa").innerHTML = lenguaje.INFOBAR;
+            $("#barra_informativa").html(lenguaje.INFOBAR);
 
-            document.getElementById("tagPuntuacion").innerHTML = lenguaje.SCORE;
+            $("#tagPuntuacion").html(lenguaje.SCORE);
 
-            document.getElementById("tagErrores").innerHTML = lenguaje.ERRORS;
+            $("#tagErrores").html(lenguaje.ERRORS);
 
-            document.getElementById("tagErroresTop").innerHTML = lenguaje.ERRORS;
+            $("#tagErroresTop").html(lenguaje.ERRORS);
 
-            document.getElementById("tagTop").innerHTML = lenguaje.TOPPLAYER;
+            $("#tagTop").html(lenguaje.TOPPLAYER);
 
-            matchmsg = lenguaje.MATCHMESSAGE
+            matchmsg = lenguaje.MATCHMESSAGE;
 
-            errormsg = lenguaje.ERRORMESSAGE
+            errormsg = lenguaje.ERRORMESSAGE;
 
-            document.getElementById("tagDesc").innerHTML = lenguaje.DESC;
+            $("#tagDesc").html(lenguaje.DESC);
 
             win = lenguaje.WIN;
 
-            document.getElementById("tagDescCompleta").innerHTML = lenguaje.DESCRIPTION;
+            $("#tagDescCompleta").html(lenguaje.DESCRIPTION);
 
-            document.getElementById("leng").innerHTML = idioma;
+            $("#leng").html(idioma);
     }
     
 }
