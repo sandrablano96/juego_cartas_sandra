@@ -17,15 +17,9 @@ p {
 }
 
 .marcador{
-    grid-column: 1/5;
     text-transform: uppercase;
 }
 
-.container-fluid{
-    width: 70%;
-    margin: auto;
-    
-}
 .carta {
     height: 20rem;
     text-align: center;

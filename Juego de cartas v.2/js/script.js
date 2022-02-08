@@ -19,7 +19,7 @@ const barraInformativa = $("#barra_informativa");
 window.onload = function init() {
 
     $(botonInicio).html('<i class="fas fa-play"></i>');
-    
+
 
     if (localStorage.getItem("idioma") != null) {
         cambiarIdiomaJSON(localStorage.getItem("idioma"));
@@ -34,18 +34,21 @@ window.onload = function init() {
         aux = localStorage.setItem("errores", 100);
     }
     $(".carta").addClass("prevent-click");
-    
+    $("#mostrar").addClass("prevent-click");
+
 }
 
-$("#comenzar").click(function (){
-    if(usuario == ""){  
+$("#comenzar").click(function () {
+    if (usuario == "") {
         return;
     }
     $("#usuario").html(usuario);
     $(errores).html(0);
     barajar();
     $(".modal").modal('hide');
-}); 
+    $("#mostrar").removeClass("prevent-click");
+    comprobarDificultad();
+});
 
 function barajar() {
     if ($(cartas).attr("name") != null) {
@@ -59,8 +62,9 @@ function barajar() {
 
     $(".carta").on("click", mostrarImagenes);
     $(".carta").removeClass("prevent-click");
+
     $(cont).html(0);
-    
+
 }
 
 
@@ -104,12 +108,12 @@ function finDePartida() {
     $(cartas).removeClass("correcta");
     $(cartas).each(function (index, element) {
         $(element).children().first().empty();
-    })
+    });
     $(botonInicio).html('<i class="fas fa-play"></i>');
     $(barraInformativa).html(errormsg);
     $(barraInformativa).removeClass("alert-success");
     $(barraInformativa).addClass("alert-danger");
-    $('.progress-bar').css('width','0%').attr('aria-valuenow', '0');
+    $('.progress-bar').css('width', '0%').attr('aria-valuenow', '0');
     barajar();
 
 }
@@ -165,7 +169,7 @@ function checkTotal() {
     contParsed = parseInt($(cont).text(), 10)
     contParsed++
     $(cont).html(contParsed);
-    if (contParsed == 6) {
+    if (contParsed == 7) {
         guardarPuntuacionFinal(this.usuario, errores.textContent);
         $(barraInformativa).removeClass("alert-success");
         $(barraInformativa).removeClass("alert-danger");
@@ -259,6 +263,32 @@ function cambiarIdiomaJSON(idioma) {
         $("#leng").html(idioma);
     }
 
+}
+
+function comprobarDificultad() {
+    if ($('input[name="dificultad"]:checked').val() == "facil") {
+        $("#mostrar").css("display", "block");
+    }
+    $("#mostrar").on("click", function () {
+        $(cartas).each(function (index, element) {
+            $(element).addClass("prevent-click")
+            $(element).addClass("cara-delantera");
+            imagen = document.createElement("img");
+            $(imagen).attr("src", "img/" + $(element).attr("name") + ".png")
+            $(element).children(".carta__imagen").html(imagen);
+        });
+        $(cartas).each(function (index, element) {
+            setTimeout(() => {
+                if (!$(element).hasClass("correcta")) {
+                    $(element).removeClass("cara-delantera");
+                    $(element).children().first().empty();
+                }
+
+            }, 2000);
+        });
+        $("#mostrar").off("click");
+
+    });
 }
 
 

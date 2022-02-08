@@ -10,7 +10,7 @@ h2 {
 }
 
 img {
-  max-width: 90%;
+  max-width: 100%;
 }
 
 .header {
@@ -141,7 +141,9 @@ table, tr, td, th {
   border-radius: 0.5rem;
   font-size: 2rem;
 }
-
+button#mostrar{
+  display: none;
+}
 button:hover {
   font-weight: 700;
 }

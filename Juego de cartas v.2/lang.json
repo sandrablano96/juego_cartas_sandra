@@ -2,7 +2,7 @@
     "lang": {
         "eng" : {
             "STADISTICS": "STADISTICS",
-            "INFOBAR": "GAME START!", 
+            "INFOBAR": "Click on Play to start the game", 
             "SCORE": "Score", 
             "ERRORS": "Errors",
             "TOPPLAYER": "Top player",
@@ -14,7 +14,7 @@
         }, 
         "esp" : {
             "STADISTICS": "ESTADISTICAS",
-            "INFOBAR": "¡QUE COMIENCE EL JUEGO!", 
+            "INFOBAR": "¡Pulsa play para que comience el juego!", 
             "SCORE": "Puntuación", 
             "ERRORS": "Errores",
             "TOPPLAYER": "Mejor jugador",
