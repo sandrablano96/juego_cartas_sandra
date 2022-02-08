@@ -21,18 +21,13 @@ p {
     text-transform: uppercase;
 }
 
-.contenedor-grid{
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-template-rows: repeat(3, 200px);
-    
-    gap:10px;
+.container-fluid{
     width: 70%;
     margin: auto;
-    padding: 2rem;
+    
 }
-
 .carta {
+    height: 20rem;
     text-align: center;
     background-image: url("../img/cara-trasera.jpg");
     background-size: cover;
