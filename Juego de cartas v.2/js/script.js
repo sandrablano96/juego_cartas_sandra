@@ -4,6 +4,7 @@ const errores = $("#errores");
 let cartasSeleccionadas = new Array();
 const cartas = $(".carta");
 const usuario = $("#nick").val();
+const mostrarAyuda = $("#mostrar");
 let imagen;
 let win, matchmsg, errormsg;
 let audio = new Audio();
@@ -129,7 +130,7 @@ function deseleccionar(cartas) {
         });
         $(barraInformativa).removeClass("alert-danger");
         $(barraInformativa).addClass("alert-success");
-        let progresoActual = parseInt($(".progress-bar").attr("aria-valuenow")) + 16.6;
+        let progresoActual = parseInt($(".progress-bar").attr("aria-valuenow")) + 14.28;
         $('.progress-bar').css('width', progresoActual + '%').attr('aria-valuenow', progresoActual);
         $(barraInformativa).html(matchmsg);
         $('.alert').alert();
@@ -267,28 +268,32 @@ function cambiarIdiomaJSON(idioma) {
 
 function comprobarDificultad() {
     if ($('input[name="dificultad"]:checked').val() == "facil") {
-        $("#mostrar").css("display", "block");
+        $(mostrarAyuda).css("display", "block");
+
+        $(mostrarAyuda).on("click", function () {
+            $(cartasSeleccionadas).splice(0, cartasSeleccionadas.length);
+            $(cartas).each(function (index, element) {
+                $(element).addClass("prevent-click")
+                $(element).addClass("cara-delantera");
+                imagen = document.createElement("img");
+                $(imagen).attr("src", "img/" + $(element).attr("name") + ".png")
+                $(element).children(".carta__imagen").html(imagen);
+            });
+            $(cartas).each(function (index, element) {
+                setTimeout(() => {
+                    if (!$(element).hasClass("correcta")) {
+                        $(element).removeClass("cara-delantera");
+                        $(element).children().first().empty();
+                    }
+
+                }, 2000);
+            });
+            $(mostrarAyuda).off("click");
+            
+        });
+    } else {
+        $(mostrarAyuda).css("display", "none");
     }
-    $("#mostrar").on("click", function () {
-        $(cartas).each(function (index, element) {
-            $(element).addClass("prevent-click")
-            $(element).addClass("cara-delantera");
-            imagen = document.createElement("img");
-            $(imagen).attr("src", "img/" + $(element).attr("name") + ".png")
-            $(element).children(".carta__imagen").html(imagen);
-        });
-        $(cartas).each(function (index, element) {
-            setTimeout(() => {
-                if (!$(element).hasClass("correcta")) {
-                    $(element).removeClass("cara-delantera");
-                    $(element).children().first().empty();
-                }
-
-            }, 2000);
-        });
-        $("#mostrar").off("click");
-
-    });
 }
 
 
