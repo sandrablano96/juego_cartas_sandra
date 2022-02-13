@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Sarpanch:wght@400;800&display=swap");
 /* ---------------------------------------------------------------------------------- */
-h1 {
+header {
   font-family: "Poppins", sans-serif;
 }
 
@@ -13,12 +13,36 @@ img {
   max-width: 90%;
 }
 
+body {
+  font-family: "Sarpanch", sans-serif;
+}
+
 .header {
   background-color: dodgerblue;
-  color: white;
+  padding: 3rem;
   border-bottom: 1px solid black;
 }
 
+.nav-link {
+  color: white;
+  font-size: 3.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-link:hover {
+  font-style: italic;
+  color: white;
+}
+
+.active {
+  color: gold;
+}
+
+.header__titulo {
+  position: relative;
+  left: 9rem;
+}
 
 main {
   background-image: url("img/homer.jpg");
@@ -53,26 +77,19 @@ main {
   text-align: center;
 }
 
-.estadisticas__titulo {
-  width: 100%;
-  margin-bottom: 2rem;
-}
-
 table, tr, td, th {
   text-align: center;
-  padding: 1rem;
-  width: 20rem;
   border: 1px solid black;
   border-collapse: collapse;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
 }
 
 #barra_informativa {
-  margin: auto;
-  margin-top: 1rem;
-  line-height: 1.5;
   padding: 2rem;
-  text-align: center;
+}
+
+#mostrar {
+  display: none;
 }
 
 .prevent-click {
@@ -139,22 +156,25 @@ table, tr, td, th {
   background-color: white;
   border-collapse: collapse;
   border-radius: 0.5rem;
-  font-size: 2rem;
+  font-size: 3rem;
+  padding: 2rem auto;
 }
-button#mostrar{
-  display: none;
+
+.btn:hover {
+  background-color: dodgerblue;
 }
+
 button:hover {
   font-weight: 700;
 }
 
-/*MEDIA QUERIES*/
-@media screen and (max-width: 480px) {
-  h1 span {
-    display: none;
-  }
+header .btn-group-lg > .btn, header.btn-lg {
+  font-size: 2rem;
+}
 
-  h1:after {
-    content: "Parejas";
-  }
-}/*# sourceMappingURL=sandra.css.map */
+header .btn-group-lg > .btn:hover, header .btn-lg {
+  background-color: indigo;
+  color: white;
+}
+
+/* informacion *//*# sourceMappingURL=sandra.css.map */

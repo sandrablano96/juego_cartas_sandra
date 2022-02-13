@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="Es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=d25ice-width, 25itial-sca.0">
+    <meta name="description" content="Juego de memoria con cartas de Los Simpson">
+    <title>Juego de cartas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="js/jquery-ui-1.13.1.custom/jquery-ui.min.css">
+    <link rel="icon" href="img/favicon.ico" type="image/png" />
+    <link href="fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/estilos.css">
+    <link rel="stylesheet" type="text/css" href="css/sandra.css">
+</head>
+
+<body>
+    <div class="container-fluid w-100">
+        <header class="header row">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="https://www.themoviedb.org/t/p/original/hKuiXx5eNObCLKe9BOl7O7ulKyg.png" alt="logo"
+                            width=225 height=100>
+                    </a>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="cartas.html">Juego</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="informacion.html">Informacion</a>
+                        </li>
+                    </ul>
+                    <div class="btn-group btn-group-lg" role="group">
+                        <button type="button" class="idioma btn-outline-dark btn" id="esp">ESP</button>
+                        <button type="button" class="idioma btn-outline-dark btn" id="eng">ENG</button>
+                    </div>
+                </div>
+
+            </nav>
+
+        </header>
+    </div> <!-- fin del header-->
+    <div class="container-fluid w-75 justify-content-between">
+        <div class="row mt-5 justify-content-around">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-12 bg-light p-2">
+                <main>
+                    <section class="info-cartas">
+                        <div class="row w-100 mt-2">
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-6 mb-2 d-flex align-items-stretch">
+                                <div class="card">
+                                    <img src="img/marge.png" class="card-img-top p-5" alt="marge">
+                                    <div class="card-body">
+                                    <h5 class="card-title">Marge</h5>
+                                    <p class="card-text">Es la cabeza de la familia, siempre dispuesta a todo por sus hijos y Homer. A veces se deja llevar por sus emociones, pero normalmente es bastante racional</p>
+                                
+                                </div>
+                            </div>
+                            
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-6 mb-2 d-flex align-items-stretch">
+                                <div class="card">
+                                    <img src="img/homer.png" class="card-img-top p-5" p-5 alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Homer</h5>
+                                        <p class="card-text">Homer es una persona impulsiva y extravagante, dispuesto a hacer cualquier cosa por una
+                                            cerveza. Sin embargo, hay algo que está por encima de la cerveza: su familia.</p>       
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-6 mb-2 d-flex align-items-stretch">
+                                <div class="card">
+                                    <img src="img/bart.png" class="card-img-top p-5" p-5 alt="...">
+                                    <div class="card-body">
+                                    <h5 class="card-title">Bart</h5>
+                                    <p class="card-text">Bart es el hermano mayor, pero no el hermano mayor que todos pensaríamos. Rebelde y alocado, va haciendo de la ciudad de las suyas, y si supone molestar a su hermana, aún mejor</p> 
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-6 mb-2 d-flex align-items-stretch">
+                                <div class="card">
+                                    <img src="img/lisa.png" class="card-img-top p-5" p-5 alt="...">
+                                    <div class="card-body">
+                                    <h5 class="card-title">Lisa</h5>
+                                    <p class="card-text">Lisa es la hermana mediana perfecta, una niña de gran inteligencia y empatía, que tratará de mejorar el mundo en un futuro, sin dudas. Por eso a veces es la hermana mayor, mentalmente hablando</p>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-6 mb-2 d-flex align-items-stretch">
+                                <div class="card">
+                                    <img src="img/maggie.png" class="card-img-top p-5" p-5 alt="...">
+                                    <div class="card-body">
+                                    <h5 class="card-title">Maggie</h5>
+                                    <p class="card-text">Maggie es la pequeña de la familia y no se separa de su madre. A pesar de todavía no hablar, ha demostrado más de una vez su gran inteligencia.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-6 mb-2 d-flex align-items-stretch">
+                                <div class="card">
+                                    <img src="img/abuelo.png" class="card-img-top p-5" p-5 alt="...">
+                                    <div class="card-body">
+                                    <h5 class="card-title">Abuelo Simpson</h5>
+                                    <p class="card-text">El abuelo Simpson es un cascarrabias, lleno de historias de contar y que, con un poco de remordimiento, desea cuidar mejor a sus nietos de lo que hizo con Homer</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-6 mb-2 d-flex align-items-stretch">
+                                <div class="card">
+                                    <img src="img/flanders.png" class="card-img-top p-5" p-5 alt="...">
+                                    <div class="card-body">
+                                    <h5 class="card-title">Flanders</h5>
+                                    <p class="card-text">Es el vecino perfecto, con valores éticos, siempre dispuesto a ayudar al prójimo. Es tan perfecto casi siempre que te pone de los nervios con su ¡Hola, holita, vecinito!.</p>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-6 mb-2 d-flex align-items-stretch">
+                                <div class="card">
+                                    <img src="img/bomba.png" class="card-img-top p-5" p-5 alt="...">
+                                    <div class="card-body">
+                                    <h5 class="card-title">Bomba</h5>
+                                    <p class="card-text">¡Es la carta que no deseas encontrarte!</p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div><!--fin col main-->
+            <div class="col-xl-4 col-lg-3 col-md-3 col-12 ps-5">
+                <aside>
+                    <h2>Info</h2>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur dolorem quos pariatur tenetur distinctio? Aut aliquam ea perspiciatis sit quisquam unde, repellendus quas qui eum dolore nobis ullam sint cumque voluptatum itaque ut, molestiae doloribus. Autem magni voluptatibus magnam facilis?</p>
+                </aside>
+                <aside>
+                    <h2>¡Boomb!</h2>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur dolorem quos pariatur tenetur distinctio? Aut aliquam ea perspiciatis sit quisquam unde, repellendus quas qui eum dolore nobis ullam sint cumque voluptatum itaque ut, molestiae doloribus. Autem magni voluptatibus magnam facilis?</p>
+                </aside>
+                <aside>
+                    <h2>Niveles</h2>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur dolorem quos pariatur tenetur distinctio? Aut aliquam ea perspiciatis sit quisquam unde, repellendus quas qui eum dolore nobis ullam sint cumque voluptatum itaque ut, molestiae doloribus. Autem magni voluptatibus magnam facilis?</p>
+                </aside>
+
+            </div><!-- fin col aside-->
+            
+        </div> <!--fin fila-->
+        
+    </div> <!--fin contenedor-->
+    <footer class="footer">
+        <p>Sandra Blazquez Notario</p>
+        <p>Juego de cartas</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="js/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+</body>
+        
+    
+</body>
+</html>

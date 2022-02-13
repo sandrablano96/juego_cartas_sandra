@@ -29,11 +29,10 @@ window.onload = function init() {
         cambiarIdiomaJSON("esp");
     }
     if (localStorage.getItem("errores") != null && localStorage.getItem("usuario") != null) {
-        $(filaError).html(localStorage.getItem("errores"))
-        $(jugadorTop).html(localStorage.getItem("usuario"))
-    } else {
-        aux = localStorage.setItem("errores", 100);
+        $(filaError).html(localStorage.getItem("errores"));
+        $(jugadorTop).html(localStorage.getItem("usuario"));
     }
+
     $(".carta").addClass("prevent-click");
     $("#mostrar").addClass("prevent-click");
 
@@ -46,19 +45,21 @@ $("#comenzar").click(function () {
     $("#usuario").html(usuario);
     $(errores).html(0);
     barajar();
+    $( ".carta" ).effect( "bounce", { direction: 'down',times:2}, "slow" );
     $(".modal").modal('hide');
     $("#mostrar").removeClass("prevent-click");
     comprobarDificultad();
 });
 
 function barajar() {
-    if ($(cartas).attr("name") != null) {
-        $(cartas).removeAttr("name");
+    if ($(cartas).data("name") != null) {
+        $(cartas).removeData("name");
     }
     const arrayOpciones = opciones.sort(function () { return Math.random() - 0.5 });
     for (let i = 0; i < arrayOpciones.length; i++) {
-
-        cartas[i].setAttribute("name", arrayOpciones[i]);
+        $(cartas[i]).data("name", arrayOpciones[i]);
+        console.log($(cartas[i]).data("name"));
+        //cartas[i].setAttribute("name", arrayOpciones[i]);
     }
 
     $(".carta").on("click", mostrarImagenes);
@@ -74,12 +75,16 @@ function mostrarImagenes(evt) {
     const carta = evt.target;
     $(carta).off("click");
     if (carta != null) {
-        const idCarta = $(carta).attr("name");
+        const idCarta = $(carta).data("name");
         imagen = document.createElement("img");
+        $(carta).addClass("cara-delantera",300, callback);
         $(imagen).attr("src", "img/" + idCarta + ".png")
-        $(carta).children(".carta__imagen").html(imagen);
+        setTimeout(() => {
+            $(carta).children(".carta__imagen").html(imagen);
+        }, 350);
+        
         $(imagen).attr("alt", idCarta);
-        $(carta).addClass("cara-delantera");
+        
         $("#audio").attr("src", "audio/click.mp3"); 0
         $("#audio")[0].play();
         cartasSeleccionadas.push(carta);
@@ -100,10 +105,14 @@ function mostrarImagenes(evt) {
         }
     }
 }
+function callback() {
+    setTimeout(function() {
+      $(carta).removeClass( "cara-delantera" );
+    }, 1500 );
+  }
 
 function finDePartida() {
     contadorClicks = 0;
-    alert("¡BOOM! Vuelve a empezar");
     $(cartas).off("click");
     $(cartas).removeClass("cara-delantera");
     $(cartas).removeClass("correcta");
@@ -121,26 +130,26 @@ function finDePartida() {
 
 function deseleccionar(cartas) {
     if (comprobarIguales(cartas)) {
+        $(barraInformativa).html(matchmsg);
         $("#audio").attr("src", "audio/correct.mp3");
         $("#audio")[0].play();
         cartas.forEach(element => {
+            $(element).addClass("correcta").effect("highlight", { color: " #1AAE00 " }, "slow");
             $(element).off("click");
-            $(element).addClass("correcta");
 
         });
         $(barraInformativa).removeClass("alert-danger");
         $(barraInformativa).addClass("alert-success");
-        let progresoActual = parseInt($(".progress-bar").attr("aria-valuenow")) + 14.28;
+        let progresoActual = parseInt($(".progress-bar").attr("aria-valuenow")) + 15;
         $('.progress-bar').css('width', progresoActual + '%').attr('aria-valuenow', progresoActual);
-        $(barraInformativa).html(matchmsg);
+        checkTotal();
         $('.alert').alert();
-
-
-
+        
     } else {
+        $(cartas).effect( "shake", "fast");
+        $("#audio").attr("src", "audio/fallo.mp3");
+        $("#audio")[0].play();
         cartas.forEach(element => {
-            $("#audio").attr("src", "audio/fallo.mp3");
-            $("#audio")[0].play();
             $(element).children().first().empty();
             $(element).on("click", mostrarImagenes);
             $(element).removeClass("cara-delantera");
@@ -157,8 +166,7 @@ function deseleccionar(cartas) {
 
 
 function comprobarIguales(arraySeleccionados) {
-    if ($(arraySeleccionados[0]).attr("name") === $(arraySeleccionados[1]).attr("name")) {
-        checkTotal();
+    if ($(arraySeleccionados[0]).data("name") === $(arraySeleccionados[1]).data("name")) { 
         return true;
     } else {
         sumarErrores();
@@ -171,16 +179,21 @@ function checkTotal() {
     contParsed++
     $(cont).html(contParsed);
     if (contParsed == 7) {
-        guardarPuntuacionFinal(this.usuario, errores.textContent);
+        $(barraInformativa).html(win);
+        if(parseInt($(errores).text(), 10) < localStorage.getItem("errores")){
+            $(barraInformativa).html("Nuevo record!");
+        
+        guardarPuntuacionFinal(usuario,  parseInt($(errores).text(), 10));
         $(barraInformativa).removeClass("alert-success");
         $(barraInformativa).removeClass("alert-danger");
         $(barraInformativa).addClass("alert-info");
-        $(barraInformativa).html(win);
-        $('.alert').alert();
+        
         setTimeout(() => {
             window.location.reload();
-        }, 500);
-
+        }, 10000);
+        
+    }
+        
     }
 }
 
@@ -191,13 +204,13 @@ function sumarErrores() {
 }
 
 function guardarPuntuacionFinal(usuario, errores) {
-    let aux = localStorage.getItem("errores")
 
-    if (aux != null && errores < aux) {
+    if (errores < localStorage.getItem("errores") || localStorage.getItem("errores") == null) {
         localStorage.setItem("usuario", usuario);
         localStorage.setItem("errores", errores);
-        $(barraInformativa).html("¡Has ganado con un nuevo record!")
-    }
+        
+
+    } 
 }
 
 //Idioma
@@ -262,6 +275,14 @@ function cambiarIdiomaJSON(idioma) {
         $("#tagDescCompleta").html(lenguaje.DESCRIPTION);
 
         $("#leng").html(idioma);
+
+        $("#modalNickLabel").html(lenguaje.NICK);
+
+        $("label[for*='facil']").html(lenguaje.LEVEL.easy);
+
+        $("label[for*='normal']").html(lenguaje.LEVEL.normal);
+
+        $("label[for*='dificil']").html(lenguaje.LEVEL.hard);
     }
 
 }
@@ -276,7 +297,7 @@ function comprobarDificultad() {
                 $(element).addClass("prevent-click")
                 $(element).addClass("cara-delantera");
                 imagen = document.createElement("img");
-                $(imagen).attr("src", "img/" + $(element).attr("name") + ".png")
+                $(imagen).attr("src", "img/" + $(element).data("name") + ".png")
                 $(element).children(".carta__imagen").html(imagen);
             });
             $(cartas).each(function (index, element) {
@@ -284,6 +305,7 @@ function comprobarDificultad() {
                     if (!$(element).hasClass("correcta")) {
                         $(element).removeClass("cara-delantera");
                         $(element).children().first().empty();
+                        $(element).removeClass("prevent-click");
                     }
 
                 }, 2000);

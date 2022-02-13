@@ -22,16 +22,15 @@ $negrita: 700;
 
 @mixin tablas {
     text-align: center;
-    padding: 1rem;
-    width: 20rem;
     border: 1px solid black;
     border-collapse: collapse;
-    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    
 }
 
 /* ---------------------------------------------------------------------------------- */
 
-h1{
+header{
     font-family: $fuentePrincipal;
 }
 
@@ -41,19 +40,30 @@ h2{
 img{
     max-width: 90%;
 }
+body {
+    font-family: $fuenteSecundaria;
+}
 
 .header{
     background-color: $colorPrincipal;
-    color: white;
-    display: flex;
     padding: 3rem;
     border-bottom: 1px solid black;
-    align-items: center;
 }
 
-.header__logo {
-    left: 1rem;
-    width: 20%;  
+.nav-link {
+    color: white;
+    font-size: 3.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.nav-link:hover{
+    font-style: italic;
+    color: white;
+}
+
+.active{
+    color: gold;
 }
 
 .header__titulo{
@@ -90,20 +100,18 @@ main{
     flex-wrap: wrap;
     text-align: center;
 }
-.estadisticas__titulo{
-    width: 100%;
-    margin-bottom: 2rem;
-}
+
 table,tr,td,th{
     @include tablas;
 
 }
+
 #barra_informativa{
-    margin: auto;
-    margin-top: 1rem;
-    line-height: 1.5;
     padding: 2rem;
-    text-align: center
+}
+
+#mostrar {
+    display: none;
 }
 
 .prevent-click {
@@ -167,28 +175,30 @@ table,tr,td,th{
     background-color: white;
     border-collapse: collapse;
     border-radius: 0.5rem;
-    font-size: 2rem;
+    font-size: 3rem;
+    padding: 2rem auto;
+}
 
+.btn:hover{
+    background-color: $colorPrincipal;
 }
 button:hover{
     font-weight: $negrita;
 }
-/*MEDIA QUERIES*/
 
-@media screen and (max-width: 480px) {
-    #sidebar__desc{
-        display: none;
-    }
-
-    h1 span{
-            display: none;
-    }
-
-    h1:after {
-        content: "Parejas";
-    }
-
+header .btn-group-lg > .btn, header.btn-lg{
+    font-size: 2rem;
 }
+
+header .btn-group-lg > .btn:hover, header .btn-lg {
+    background-color: $colorSecundario;
+    color: white;
+}
+
+/* informacion */
+
+
+
 
 
 
