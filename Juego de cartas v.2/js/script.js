@@ -77,22 +77,21 @@ function mostrarImagenes(evt) {
     if (carta != null) {
         const idCarta = $(carta).data("name");
         imagen = document.createElement("img");
-        $(carta).addClass("cara-delantera",300, callback);
+        $(carta).addClass("cara-delantera");
         $(imagen).attr("src", "img/" + idCarta + ".png")
-        setTimeout(() => {
-            $(carta).children(".carta__imagen").html(imagen);
-        }, 350);
-        
+        $(carta).children(".carta__imagen").html(imagen);
         $(imagen).attr("alt", idCarta);
-        
         $("#audio").attr("src", "audio/click.mp3"); 0
         $("#audio")[0].play();
         cartasSeleccionadas.push(carta);
         if (idCarta == "bomba") {
             $("#audio").attr("src", "audio/bomba.mp3");
             $("#audio")[0].play();
-            cartasSeleccionadas.splice(0, cartasSeleccionadas.length);
-            finDePartida();
+            cartasSeleccionadas.splice(0, cartasSeleccionadas.length);     
+            setTimeout(() => {
+                finDePartida();
+            }, 500);
+            
             return;
         }
 
@@ -105,17 +104,13 @@ function mostrarImagenes(evt) {
         }
     }
 }
-function callback() {
-    setTimeout(function() {
-      $(carta).removeClass( "cara-delantera" );
-    }, 1500 );
-  }
 
 function finDePartida() {
     contadorClicks = 0;
     $(cartas).off("click");
     $(cartas).removeClass("cara-delantera");
     $(cartas).removeClass("correcta");
+
     $(cartas).each(function (index, element) {
         $(element).children().first().empty();
     });
@@ -264,11 +259,13 @@ function cambiarIdiomaJSON(idioma) {
 
         $("#tagTop").html(lenguaje.TOPPLAYER);
 
+        $("#nivelesDesc").html(lenguaje.LVLDESC);
+
+        $("#bombaDesc").html(lenguaje.BOOMB)
+
         matchmsg = lenguaje.MATCHMESSAGE;
 
         errormsg = lenguaje.ERRORMESSAGE;
-
-        $("#tagDesc").html(lenguaje.DESC);
 
         win = lenguaje.WIN;
 

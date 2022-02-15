@@ -124,7 +124,7 @@ table, tr, td, th {
 }
 
 #tagDescCompleta {
-  height: 20rem;
+  max-height: 30rem;
   overflow: scroll;
 }
 
@@ -177,4 +177,20 @@ header .btn-group-lg > .btn:hover, header .btn-lg {
   color: white;
 }
 
-/* informacion *//*# sourceMappingURL=sandra.css.map */
+/* informacion */
+.info-cartas {
+  background-color: #e6e6e6;
+  background-image: url("../img/logo.png");
+  background-repeat: no-repeat;
+  background-position: 85% 85%;
+  background-size: 10rem;
+}
+
+.card > img {
+  max-width: -webkit-max-content;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  max-height: -webkit-max-content;
+  max-height: -moz-max-content;
+  max-height: max-content;
+}/*# sourceMappingURL=sandra.css.map */
