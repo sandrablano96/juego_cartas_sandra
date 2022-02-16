@@ -18,7 +18,7 @@ body {
 }
 
 .header {
-  background-color: dodgerblue;
+  background-color: #4c84e6;
   padding: 3rem;
   border-bottom: 1px solid black;
 }
@@ -161,7 +161,7 @@ table, tr, td, th {
 }
 
 .btn:hover {
-  background-color: dodgerblue;
+  background-color: #4c84e6;
 }
 
 button:hover {

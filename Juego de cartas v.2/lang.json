@@ -9,15 +9,17 @@
             "MATCHMESSAGE": "It's a match!",
             "ERRORMESSAGE":"Oops,choose better next time!",
             "DESC":"Description",
-            "WIN": "You win!",
+            "WIN": "You win! The game will reload",
+            "LOSE": "You lose! Try again!",
             "DESCRIPTION": "The memory game consists in finding the same two images within a card. The game starts with all the cards face down and tou can turn over two cards, if you find a pair, you win a point. Every time you get a point, the progress bar increments too. The player with the less error, enters our top 5 best players",
-            "BOOMB": "If you find the boomb, the game restarts...but not your errors!",
+            "BOMB": "If you find the bomb, the game restarts...but not your errors!",
             "NICK": "Choose your nick",
-            "LVLDESC": "Easy: you can see the cards only once and for 2 seconds",
+            "LVLDESC": "Easy: you can see the cards only once and for 2 seconds<br> Normal: you will see all the cards at the start<br> Hard: you can see the bomb for 1 second and the game ends if you have 2 error <br> Legend: you will see the bomb for only 1 second and the game ends when you have 2 errors",
             "LEVEL" : {
                 "easy": "Easy",
                 "normal": "Normal",
-                "hard" : "Hard"
+                "hard" : "Hard",
+                "legend" : "Legend"
             }
         }, 
         "esp" : {
@@ -29,15 +31,17 @@
             "MATCHMESSAGE": "¡Has acertado!",
             "ERRORMESSAGE":"¡Ops, escoge mejor la próxima vez!",
             "DESC":"Descripcion",
-            "WIN": "¡Has ganado!",
+            "WIN": "¡Has ganado! El juego se va a reiniciar",
+            "LOSE": "Has pérdido, inténtalo de nuevo",
             "DESCRIPTION": "El memorama es un juego de encontrar pares de cartas con la misma imagen. Todas las cartas están boca abajo y puedes voltear dos, si logras formar un par entonces ganas un punto. Cada vez que ganas un punto, la barra de progreso se incrementa tambien. El jugador con menos errores, entra en el top 5",
-            "BOOMB": "Si encuentras la bomba, el juego se reinicia... ¡aunque no tus errores",
-            "LVLDESC": "Facil: podrás ver las cartas una sola vez y durante 2 segundos",
+            "BOMB": "Si encuentras la bomba, el juego se reinicia... ¡aunque no tus errores",
+            "LVLDESC": "Facil: podrás ver las cartas una sola vez y durante 2 segundos<br> Normal: verás todas las cartas al iniciar <br> Difícil: no verás ninguna carta <br>Leyenda: verás la bomba durante 1 segundo y se finalizará la partida si tienes 2 fallos",
             "NICK": "Escoge tu nick",
             "LEVEL" : {
                 "easy": "Facil",
                 "normal": "Normal",
-                "hard" : "Dificil"
+                "hard" : "Dificil",
+                "legend" : "Leyenda"
             }
         }
 
