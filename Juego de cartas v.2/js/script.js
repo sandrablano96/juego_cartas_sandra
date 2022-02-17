@@ -23,11 +23,11 @@ const barraInformativa = $("#barra_informativa");
 
 /****************************************************************************************************/
 window.onload = function init() {
-    /*
-    localStorage.setItem("ranking", JSON.stringify(ranking));
-    let prueba = JSON.parse(localStorage.getItem("ranking"));
-    console.log(prueba)
-    */
+    
+    //localStorage.setItem("ranking", JSON.stringify(ranking));
+    //let prueba = JSON.parse(localStorage.getItem("ranking"));
+    //console.log(prueba)
+    
     if (localStorage.getItem("ranking") == null){
         ranking = new Array();
             ranking[0] = { "jugador": "jugador1", "errores": 10 };
@@ -75,6 +75,11 @@ $("#comenzar").on("click", function () {
     usuario = $("#nick").val();
     $("#usuario").html(usuario);
     $(errores).html(0);
+    $(cartas).removeClass("cara-delantera");
+    $(cartas).removeClass("correcta");
+    $(cartas).each(function (index, element) {
+        $(element).children().first().empty();
+    });
     barajar();
     $(".modal").trigger("click", function(){
         $(this).modal('hide');
@@ -177,11 +182,15 @@ function deseleccionar(cartas) {
         $('.alert').alert();
 
     } else {
-        if (errores.data("maxFallos") != null && parseInt($(errores).text(), 10) == 2) {
+        if (errores.data("maxFallos") != null && parseInt($(errores).text(), 10) == errores.data("maxFallos")) {
+            $(cartas).effect("shake", "fast");
+            $("#audio").attr("src", "audio/fallo.mp3");
+            $("#audio")[0].play();
             $(barraInformativa).html(lose);
             $(barraInformativa).removeClass("alert-success");
             $(barraInformativa).addClass("alert-danger");
-            $(cartas).addClass("prevent-click");
+            $(".carta").addClass("prevent-click");
+            alert(lose);
             setTimeout(() => {
                 window.location.reload()
             }, 2000);
@@ -291,8 +300,6 @@ function cambiarIdiomaJSON(idioma) {
 
         $("#tagTop").html(lenguaje.TOPPLAYER);
 
-        $("#nivelesDesc").html(lenguaje.LVLDESC);
-
         $("#bombaDesc").html(lenguaje.BOMB)
 
         lose = lenguaje.LOSE;
@@ -380,7 +387,7 @@ function comprobarDificultad() {
                 }, 1000);
             });
 
-            errores.data("maxFallos", 2);
+            errores.data("maxFallos", 3);
             break;
 
     }
