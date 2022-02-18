@@ -1,1 +1,1 @@
-Pareja: Sandra Blazquez Notario, Samuel Rivas Jiménez
+Sandra Blazquez Notario
