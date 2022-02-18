@@ -66,7 +66,7 @@ main {
   align-items: center;
 }
 
-.estadisticas {
+.botones-barra {
   font-size: 1.6rem;
   width: 100%;
   display: flex;
@@ -194,4 +194,8 @@ header .btn-group-lg > .btn:hover, header .btn-lg {
   max-height: -webkit-max-content;
   max-height: -moz-max-content;
   max-height: max-content;
+}
+
+accordion-item {
+  font-size: 2rem;
 }/*# sourceMappingURL=sandra.css.map */
