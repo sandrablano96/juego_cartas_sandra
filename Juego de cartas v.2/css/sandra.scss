@@ -45,6 +45,10 @@ body {
     font-family: $fuenteSecundaria;
 }
 
+.btn-info{
+    border: $colorPrincipal;
+}
+
 .header{
     background-color: $colorPrincipal;
     padding: 3rem;

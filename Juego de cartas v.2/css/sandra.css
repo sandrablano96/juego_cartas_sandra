@@ -17,6 +17,10 @@ body {
   font-family: "Sarpanch", sans-serif;
 }
 
+.btn-info {
+  border: #4c84e6;
+}
+
 .header {
   background-color: #4c84e6;
   padding: 3rem;
