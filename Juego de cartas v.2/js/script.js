@@ -13,9 +13,8 @@ const opciones = ["bart", "abuelo", "lisa", "bart", "maggie", "bomba", "maggie",
 const botonInicio = $("#botonInicio");
 
 //Ranking
-const filaError = $("#jugadorTopFilaError");
-const jugadorTop = $("#jugadorTop");
 let ranking;
+
 //Idioma
 $(".idioma").on("click", cambiaIdioma);
 
@@ -58,10 +57,6 @@ window.onload = function init() {
 
     } else {
         cambiarIdiomaJSON("esp");
-    }
-    if (localStorage.getItem("errores") != null && localStorage.getItem("usuario") != null) {
-        $(filaError).html(localStorage.getItem("errores"));
-        $(jugadorTop).html(localStorage.getItem("usuario"));
     }
 
     $(".carta").addClass("prevent-click");
