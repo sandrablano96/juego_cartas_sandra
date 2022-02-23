@@ -22,20 +22,20 @@ const barraInformativa = $("#barra_informativa");
 
 /****************************************************************************************************/
 window.onload = function init() {
-    
+
     //localStorage.setItem("ranking", JSON.stringify(ranking));
     //let prueba = JSON.parse(localStorage.getItem("ranking"));
     //console.log(prueba)
-    
-    if (localStorage.getItem("ranking") == null){
+
+    if (localStorage.getItem("ranking") == null) {
         ranking = new Array();
-            ranking[0] = { "jugador": "jugador1", "errores": 10 };
-            ranking[1] = { "jugador": "jugador2", "errores": 20 };
-            ranking[2] = { "jugador": "jugador3", "errores": 30 };
-            ranking[3] = { "jugador": "jugador4", "errores": 40 };
-            ranking[4] = { "jugador": "jugador5", "errores": 50 };
-            localStorage.setItem("ranking", JSON.stringify(ranking));
-    } else{
+        ranking[0] = { "jugador": "jugador1", "errores": 10 };
+        ranking[1] = { "jugador": "jugador2", "errores": 20 };
+        ranking[2] = { "jugador": "jugador3", "errores": 30 };
+        ranking[3] = { "jugador": "jugador4", "errores": 40 };
+        ranking[4] = { "jugador": "jugador5", "errores": 50 };
+        localStorage.setItem("ranking", JSON.stringify(ranking));
+    } else {
         ranking = JSON.parse(localStorage.getItem("ranking"));
     }
     $("#jugador1").html(ranking[0]["jugador"]);
@@ -64,9 +64,10 @@ window.onload = function init() {
 }
 
 $("#comenzar").on("click", function () {
-    if ( $("#nick").val() == "") {
+    if ($("#nick").val() == "") {
         return;
     }
+    $('.progress-bar').css('width', '0%').attr('aria-valuenow', '0');
     usuario = $("#nick").val();
     $("#usuario").html(usuario);
     $(errores).html(0);
@@ -76,7 +77,7 @@ $("#comenzar").on("click", function () {
         $(element).children().first().empty();
     });
     barajar();
-    $(".modal").trigger("click", function(){
+    $(".modal").trigger("click", function () {
         $(this).modal('hide');
     });
     $("#mostrar").removeClass("prevent-click");
@@ -118,7 +119,7 @@ function mostrarImagenes(evt) {
         $(imagen).attr("src", "img/" + idCarta + ".png")
         $(carta).children(".carta__imagen").html(imagen);
         $(imagen).attr("alt", idCarta);
-        $("#audio").attr("src", "audio/click.mp3"); 0
+        $("#audio").attr("src", "audio/click.mp3");
         $("#audio")[0].play();
         cartasSeleccionadas.push(carta);
         if (idCarta == "bomba") {
@@ -244,12 +245,12 @@ function sumarErrores() {
 function rankingJugadores(usuario, errores) {
     let arrayTop = JSON.parse(localStorage.getItem("ranking"));
     arrayTop.push({ "jugador": usuario, "errores": errores });
-    arrayTop.sort(function (a, b){
+    arrayTop.sort(function (a, b) {
         return (a.errores - b.errores)
     });
     arrayTop.splice(4, 1);
-    
-    if (arrayTop[0]["jugador"] == usuario){
+
+    if (arrayTop[0]["jugador"] == usuario) {
         $(barraInformativa).html("Nuevo record!")
     }
     localStorage.setItem("ranking", JSON.stringify(arrayTop));

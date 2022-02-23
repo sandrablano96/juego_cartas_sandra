@@ -35,7 +35,7 @@ img {
 main {
   background-image: url("img/homer.jpg");
   background-position: left bottom;
-  background-size: calc(50%);
+  background-size: 50%;
   background-repeat: no-repeat;
   max-width: 95%;
   display: flex;
