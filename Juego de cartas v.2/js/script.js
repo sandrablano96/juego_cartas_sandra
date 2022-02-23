@@ -10,6 +10,7 @@ let imagen;
 let win, matchmsg, errormsg, lose;
 let audio = new Audio();
 const opciones = ["bart", "abuelo", "lisa", "bart", "maggie", "bomba", "maggie", "homer", "flanders", "lisa", "flanders", "marge", "marge", "homer", "abuelo"];
+const opciones2 = ["bart", "bart", "bart", "bart", "bart", "bart", "maggie", "homer", "flanders", "bart", "bart", "bart", "bart", "bart", "bart"];
 const botonInicio = $("#botonInicio");
 
 //Ranking
@@ -76,12 +77,36 @@ $("#comenzar").on("click", function () {
     $(cartas).each(function (index, element) {
         $(element).children().first().empty();
     });
-    barajar();
+    if($("#infiltrado").is(":checked")){
+        barajarInfiltrado();
+        $(cartas).each(function (index, element) {
+            $(element).addClass("prevent-click")
+            $(element).addClass("cara-delantera");
+            imagen = document.createElement("img");
+            $(imagen).attr("src", "img/" + $(element).data("name") + ".png")
+            $(element).children(".carta__imagen").html(imagen);
+        });
+        $(cartas).each(function (index, element) {
+            setTimeout(() => {
+                if (!$(element).hasClass("correcta")) {
+                    $(element).removeClass("cara-delantera");
+                    $(element).children().first().empty();
+                    $(element).removeClass("prevent-click");
+                }
+
+            }, 2000);
+        });
+        $('input[name="dificultad"]').css("display", "none");
+    }else{
+        barajar();
+        comprobarDificultad();
+    }
+    
     $(".modal").trigger("click", function () {
         $(this).modal('hide');
     });
     $("#mostrar").removeClass("prevent-click");
-    comprobarDificultad();
+    
     $(".carta").effect("bounce", { direction: 'down', times: 2 }, "slow");
 
 
@@ -121,23 +146,29 @@ function mostrarImagenes(evt) {
         $(imagen).attr("alt", idCarta);
         $("#audio").attr("src", "audio/click.mp3");
         $("#audio")[0].play();
-        cartasSeleccionadas.push(carta);
-        if (idCarta == "bomba") {
-            $("#audio").attr("src", "audio/bomba.mp3");
-            $("#audio")[0].play();
-            cartasSeleccionadas.splice(0, cartasSeleccionadas.length);
-            setTimeout(() => {
-                bomba();
-            }, 500);
-
+        if($("#infiltrado").is(":checked")){
+            erroresInfiltrado(carta);
             return;
         }
+        cartasSeleccionadas.push(carta);
+         
+            if (idCarta == "bomba") {
+                $("#audio").attr("src", "audio/bomba.mp3");
+                $("#audio")[0].play();
+                cartasSeleccionadas.splice(0, cartasSeleccionadas.length);
+                setTimeout(() => {
+                    bomba();
+                }, 500);
+                return;
+            }
 
         if (contadorClicks == 2) {
+            $(cartas).addClass("prevent-click");   
             $(botonInicio).html('<i class="fas fa-undo-alt"></i>');
             contadorClicks = 0;
             setTimeout(() => {
                 deseleccionar(cartasSeleccionadas);
+                $(cartas).removeClass("prevent-click");
             }, 500);
         }
     }
@@ -389,6 +420,51 @@ function comprobarDificultad() {
     }
 }
 
+function erroresInfiltrado(carta){
+    
+    if($(carta).data("name") == "bart"){
+        $(barraInformativa).addClass("alert-danger");
+        $(barraInformativa).html(lose);
+        $(cartas).addClass("prevent-click");
+        setTimeout(() => {
+            window.location.reload()
+        }, 2000);
+    }else{
+        contParsed = parseInt($(cont).text(), 10)
+        contParsed++
+        $(cont).html(contParsed);
+        $(carta).addClass("correcta").effect("highlight", { color: " #1AAE00 " }, "slow");
+        $(carta).off("click");
+        $(barraInformativa).addClass("alert-success");
+        $(barraInformativa).html("¡Sigue así!");
+        $('.alert').alert();
+        if(contParsed == 3){
+            $(barraInformativa).addClass("alert-info");
+            $(barraInformativa).html(win);
+            $('.alert').alert();
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000);
+        }
+    }
+    
+}
 
+function barajarInfiltrado(){
+    $(cartas).off("click");
 
+        if ($(cartas).data("name") != null) {
+            $(cartas).removeData("name");
+        }
+        const arrayOpciones2 = opciones2.sort(function () { return Math.random() - 0.5 });
+        for (let i = 0; i < arrayOpciones2.length; i++) {
+            $(cartas[i]).data("name", arrayOpciones2[i]);
+            console.log($(cartas[i]).data("name"));
 
+        }
+
+        $(".carta").on("click", mostrarImagenes);
+        $(".carta").removeClass("prevent-click");
+
+        $(cont).html(0);
+}
